@@ -5,7 +5,7 @@ var hourlyTasks = []
 
 
 //on click convert to a text area
-$("#desc").on("click",function(){
+$("#hour-calender").on("click", "#desc",function(){
     var text = $(this)
         .text()
         .trim()
@@ -14,7 +14,6 @@ $("#desc").on("click",function(){
     .attr("id", "textarea-desc")
     .addClass("form-control col-10")
     .val(text)
-
 
     $(this).replaceWith(textArea)
 
@@ -29,7 +28,6 @@ $(".saveBtn").click(function(){
     .attr("id","desc")
     .addClass("col-10 description description-borders")
     .text(text)
-    console.log(paragraph)
 
     $("#textarea-desc").replaceWith(paragraph)
 })
