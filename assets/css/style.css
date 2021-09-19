@@ -11,7 +11,7 @@ textarea{
   resize: none;
   background: transparent;
   color: #000000;
-  padding: 10px;
+  padding: 5px;
 }
 
 .jumbotron {
@@ -24,12 +24,19 @@ textarea{
 
 .description{
   white-space: pre-wrap;
+  margin: 0;
+  padding-top: 10px;
 }
 
 .description-borders{
   border-left: 4px solid grey;
   border-right: 5px solid #027f9c;
 }
+
+#text-desc{
+  width: 100%;
+}
+
 
 .time-block{
   text-align: center;
@@ -76,5 +83,4 @@ textarea{
   font-size: 20px;
   transition: all .3s  ease-in-out;
 }
-
 
