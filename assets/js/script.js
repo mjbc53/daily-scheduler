@@ -1,7 +1,17 @@
 //array to hold objects to be saved
-var hourlyTasks = []
+var hourlyEvents = []
 
-//var test = $("#description")
+//current date
+var DateTime = luxon.DateTime
+var currentDate = DateTime.now().toFormat('MMMM dd, yyyy')
+
+var saveEvents = function(){
+    
+    localStorage.setItem("hourlyEvents", JSON.stringify(hourlyEvents))
+}
+
+//append currentDate to <p> tag in header
+$("#currentDay").text(currentDate)
 
 
 //on click convert to a text area
@@ -31,3 +41,5 @@ $(".saveBtn").click(function(){
 
     $("#textarea-desc").replaceWith(paragraph)
 })
+
+
