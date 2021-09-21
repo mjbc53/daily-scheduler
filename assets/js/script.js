@@ -15,6 +15,24 @@ var saveEvents = function(){
     localStorage.setItem("hourlyEvents", JSON.stringify(hourlyEvents))
 }
 
+var loadEvents = function() {
+    var events = JSON.parse(localStorage.getItem("hourlyEvents"))
+    console.log(events)
+    
+    // if(!hourlyEvents){
+    //     hourlyEvents = []
+     //}
+    $.each(events, function() {
+        var text = $("#"+ events[hourId].hourId).text(events[hourId].text)
+
+        hourId++
+        if(hourId >= 9){
+            hourId = 0
+        }
+    })
+}
+
+
 //append currentDate to <p> tag in header
 $("#currentDay").text(currentDate)
 
@@ -50,6 +68,8 @@ $(".saveBtn").click(function(){
     $("#"+textId).replaceWith(paragraph)
 })
 
+
+
 var func = function(){
 $(".row").each(function() {
    
@@ -70,6 +90,9 @@ $(".row").each(function() {
     }
     hourlyEvents.push(tempObj)
     saveEvents()
-    
+
 });
+
 }
+
+loadEvents()
