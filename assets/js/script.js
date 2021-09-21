@@ -19,17 +19,18 @@ var loadEvents = function() {
     var events = JSON.parse(localStorage.getItem("hourlyEvents"))
     console.log(events)
     
-    // if(!hourlyEvents){
-    //     hourlyEvents = []
-     //}
-    $.each(events, function() {
-        var text = $("#"+ events[hourId].hourId).text(events[hourId].text)
-
-        hourId++
-        if(hourId >= 9){
-            hourId = 0
-        }
-    })
+    if(!hourlyEvents){
+        hourlyEvents = []
+    }else{
+        $.each(events, function() {
+            var text = $("#"+ events[hourId].hourId).text(events[hourId].text)
+    
+            hourId++
+            if(hourId >= 9){
+                hourId = 0
+            }
+        })
+    }
 }
 
 
@@ -44,6 +45,7 @@ $("#hour-calender").on("click", ".description",function(){
         .trim()
 
     textId = $(this).attr("id")
+
     console.log(textId)
 
     var textArea = $("<textarea>")
@@ -57,6 +59,7 @@ $("#hour-calender").on("click", ".description",function(){
 })
 
 
+
 $(".saveBtn").click(function(){
     var text = $("#"+textId).val()
     
@@ -66,33 +69,41 @@ $(".saveBtn").click(function(){
     .text(text)
 
     $("#"+textId).replaceWith(paragraph)
+    updateEvents()
 })
 
+// $("#hour-calender").on("blur", "textarea", function(){
+//     var id = $(this).attr("id")
+//     console.log(id)
+//     var pTag = $("<p>")
+//     .attr("id",id)
+//     .addClass("col-10 description description-borders")
+//     $(this).replaceWith(pTag)
+// })
 
 
-var func = function(){
-$(".row").each(function() {
+var updateEvents = function(){
+    $(".row").each(function() {
    
-    var tempObj = {
-        text: p,
-        hourId: hourId,
-    }
-
-    var p = $("#" + hourId).text().trim()
-    console.log(p)
-    tempObj.hourId = hourId
-    tempObj.text = p
-    console.log(tempObj)
-
-    hourId++
-    if (hourId >= 9){
-        hourId = 0
-    }
-    hourlyEvents.push(tempObj)
-    saveEvents()
-
-});
-
+        var tempObj = {
+            text: p,
+            hourId: hourId,
+        }
+    
+        var p = $("#" + hourId).text().trim()
+        tempObj.hourId = hourId
+        tempObj.text = p
+        console.log(tempObj)
+    
+        hourId++
+        if (hourId >= 9){
+            hourId = 0
+        }
+        hourlyEvents.push(tempObj)
+    
+        saveEvents()
+    })
 }
 
+//call loadEvents
 loadEvents()
