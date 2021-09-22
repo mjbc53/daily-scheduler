@@ -1,4 +1,4 @@
-//array to hold objects to be saved
+//array to hold objects to be saved in localstorage
 var hourlyEvents = []
 
 // hour ids, used to call info to be saved
@@ -7,7 +7,14 @@ var hourId = 0
 var DateTime = luxon.DateTime
 var currentDate = DateTime.now().toFormat('MMMM dd, yyyy')
 
-var test = $(".container").attr("id")
+var currentTimeObj = DateTime.now().toObject()
+console.log(currentTimeObj.hour)
+
+
+
+var timer = 2
+
+var test = DateTime.now().toObject()
 
 var textId = ""
 
@@ -17,7 +24,7 @@ var saveEvents = function(){
 
 var loadEvents = function() {
     var events = JSON.parse(localStorage.getItem("hourlyEvents"))
-    console.log(events)
+
     
     if(!hourlyEvents){
         hourlyEvents = []
@@ -72,14 +79,28 @@ $(".saveBtn").click(function(){
     updateEvents()
 })
 
-// $("#hour-calender").on("blur", "textarea", function(){
-//     var id = $(this).attr("id")
-//     console.log(id)
-//     var pTag = $("<p>")
-//     .attr("id",id)
-//     .addClass("col-10 description description-borders")
-//     $(this).replaceWith(pTag)
-// })
+
+$(".row").each(function(){
+    var hour = $(this).attr("data-hour")
+    hour = parseInt(hour)
+
+
+    
+    if(hour === currentTimeObj.hour){
+        var childElement = $(this).children(".description")
+
+        childElement.addClass("bg-danger")
+    
+    } else if(hour < currentTimeObj.hour){
+        var childElement = $(this).children(".description")
+
+        childElement.addClass("bg-secondary")
+    } else if(hour > currentTimeObj.hour){
+        var childElement = $(this).children(".description")
+
+        childElement.addClass("bg-success")
+    }
+})
 
 
 var updateEvents = function(){
@@ -104,6 +125,7 @@ var updateEvents = function(){
         saveEvents()
     })
 }
+
 
 //call loadEvents
 loadEvents()
