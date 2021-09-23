@@ -69,26 +69,30 @@ $("#hour-calender").on("click", ".description",function(){
 
 // save what is in the text area when the savebtn is clicked
 $(".saveBtn").click(function(){
+    var id = $("textarea").attr("id")
+    console.log(id)
     //get text from textarea
-    var text = $("#"+textId).val()
+    var text = $("#"+id).val()
     
     //create p element
     var p = $("<p>")
-    .attr("id",textId)
+    .attr("id",id)
     .addClass("col-10 description description-borders")
     .text(text)
 
     //replace textarea
-    $("#"+textId).replaceWith(p)
+    $("#"+id).replaceWith(p)
+
+    checktime()
     //call updateEvents function to update events in localStorage
     updateEvents()
 })
 
-
-
-//calls each div with calls of row and loops through them to check current
-//hour vs what the hour of each time block is
-$(".row").each(function(){
+// function that can be called to check time and set backgrounds
+var checktime = function() {
+    //calls each div with calls of row and loops through them to check current
+    //hour vs what the hour of each time block is
+    $(".row").each(function(){
     //get data-hour attribute of row to know which hour it is 
     var hour = $(this).attr("data-hour")
     //parseInt string to intiger
@@ -117,12 +121,17 @@ $(".row").each(function(){
         childElement.addClass("future")
     }
 })
+}
+
 
 
 
 
 // function that updates the localstorage with events that have been changed
 var updateEvents = function(){
+    //clear hourlyEvents array everytime an event is changed so that changes
+    //dont over lap when pushed
+    hourlyEvents=[]
     //loops through each div with row class 
     $(".row").each(function() {
         
@@ -144,9 +153,7 @@ var updateEvents = function(){
         if (hourId >= 9){
             hourId = 0
         }
-        //clear hourlyEvents array everytime an event is changed so that changes
-        //dont over lap when pushed
-        hourlyEvents = []
+        
         //push tempObj to hourlyEvents to be saved
         hourlyEvents.push(tempObj)
     
@@ -158,3 +165,11 @@ var updateEvents = function(){
 
 //call loadEvents function
 loadEvents()
+
+//call checktime event ever 15 minutes tp update backgrounds
+setInterval(() => {
+    checktime()
+}, 900000);
+
+//check time when page is first loaded
+checktime()
